@@ -16,22 +16,26 @@ limitations under the License.
 
 package constants
 
-import "time"
+import (
+	"os"
+	"path/filepath"
+	"time"
+)
 
 // Command-line flag defaults
-const (
+var (
 	DefaultVersion    = "3.5.7"
-	DefaultInstallDir = "/opt/bin/"
+	DefaultInstallDir = filepath.Join(os.Getenv("HOME"), ".tbk/etcdadm/opt")
 
 	DefaultReleaseURL      = "https://github.com/coreos/etcd/releases/download"
 	DefaultImageRepository = "quay.io/coreos/etcd"
-	DefaultCertificateDir  = "/etc/etcd/pki"
+	DefaultCertificateDir  = filepath.Join(os.Getenv("HOME"), ".tbk/etcdadm/pki")
 
-	UnitFile        = "/etc/systemd/system/etcd.service"
-	EnvironmentFile = "/etc/etcd/etcd.env"
-	EtcdctlEnvFile  = "/etc/etcd/etcdctl.env"
+	UnitFile        = filepath.Join(os.Getenv("HOME"), ".config/systemd/user/etcd.service")
+	EnvironmentFile = filepath.Join(os.Getenv("HOME"), ".tbk/etcdadm/etc/etcd.env")
+	EtcdctlEnvFile  = filepath.Join(os.Getenv("HOME"), ".tbk/etcdadm/etc/etcdctl.env")
 
-	DefaultDataDir    = "/var/lib/etcd"
+	DefaultDataDir    = filepath.Join(os.Getenv("HOME"), ".tbk/etcdadm/var/etcd")
 	DefaultPodSpecDir = "/etc/kubernetes/manifests"
 
 	DefaultLoopbackHost = "127.0.0.1"
@@ -149,7 +153,7 @@ export ETCDCTL_KEY={{ .EtcdctlKeyFile }}
 export ETCDCTL_DIAL_TIMEOUT=3s
 `
 	DefaultSkipRemoveMember = false
-	DefaultCacheBaseDir     = "/var/cache/etcdadm/"
+	DefaultCacheBaseDir     = filepath.Join(os.Getenv("HOME"), ".tbk/etcdadm/cache")
 
 	EtcdctlShellWrapperTemplate = `#!/usr/bin/env sh
 if ! [ -r "{{ .EtcdctlEnvFile }}" ]; then

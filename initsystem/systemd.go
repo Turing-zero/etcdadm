@@ -40,7 +40,7 @@ type SystemdInitSystem struct {
 }
 
 func (s SystemdInitSystem) reloadSystemd() error {
-	if err := exec.Command("systemctl", "daemon-reload").Run(); err != nil {
+	if err := exec.Command("systemctl", "--user", "daemon-reload").Run(); err != nil {
 		return fmt.Errorf("failed to reload systemd: %v", err)
 	}
 	return nil
@@ -53,9 +53,9 @@ func (s SystemdInitSystem) start() error {
 	if err := s.reloadSystemd(); err != nil {
 		return err
 	}
-	args := []string{"start", service}
+	args := []string{"--user", "start", service}
 	if err := exec.Command("systemctl", args...).Run(); err != nil {
-		return fmt.Errorf("failed to start service: %v", err)
+		return fmt.Errorf("failed to start service abaaba: %v", err)
 	}
 	return nil
 }
@@ -81,7 +81,7 @@ func (s SystemdInitSystem) enable() error {
 	if err := s.reloadSystemd(); err != nil {
 		return err
 	}
-	args := []string{"enable", service}
+	args := []string{"--user", "enable", service}
 	if err := exec.Command("systemctl", args...).Run(); err != nil {
 		return fmt.Errorf("failed to enable service: %v", err)
 	}

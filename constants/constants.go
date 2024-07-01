@@ -25,7 +25,7 @@ import (
 // Command-line flag defaults
 var (
 	DefaultVersion    = "3.5.7"
-	DefaultInstallDir = filepath.Join(os.Getenv("HOME"), ".tbk/etcdadm/opt")
+	DefaultInstallDir = filepath.Join(os.Getenv("HOME"), ".tbk/etcdadm/bin")
 
 	DefaultReleaseURL      = "https://github.com/coreos/etcd/releases/download"
 	DefaultImageRepository = "quay.io/coreos/etcd"

@@ -19,6 +19,7 @@
 SHELL := /usr/bin/env bash
 CWD := $(shell pwd)
 BIN := etcdadm
+HOME := $(shell echo $$HOME)
 PACKAGE_GOPATH := /go/src/sigs.k8s.io/$(BIN)
 LDFLAGS := $(shell source ./version.sh ; KUBE_ROOT=. ; KUBE_GIT_VERSION=${VERSION_OVERRIDE} ; kube::version::ldflags)
 GIT_STORAGE_MOUNT := $(shell source ./git_utils.sh; container_git_storage_mount)
@@ -36,6 +37,13 @@ $(BIN):
 
 clean:
 	rm -f $(BIN) plantuml.jar
+
+install: $(BIN)
+	mkdir -p $(HOME)/.tbk/$(BIN)/bin
+	cp $(BIN) $(HOME)/.tbk/$(BIN)/bin
+# ifneq ($(shell grep -q "export PATH=\$$PATH:$(HOME)/.tbk/$(BIN)/bin" $(HOME)/.bashrc; echo $$?), 0)
+# 	echo "export PATH=\$$PATH:$(HOME)/.tbk/$(BIN)/bin" >> $(HOME)/.bashrc
+# endif
 
 diagrams: plantuml.jar
 	java -jar plantuml.jar docs/diagrams/*.md

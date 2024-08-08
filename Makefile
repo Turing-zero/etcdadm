@@ -41,9 +41,9 @@ clean:
 install: $(BIN)
 	mkdir -p $(HOME)/.tbk/$(BIN)/bin
 	cp $(BIN) $(HOME)/.tbk/$(BIN)/bin
-# ifneq ($(shell grep -q "export PATH=\$$PATH:$(HOME)/.tbk/$(BIN)/bin" $(HOME)/.bashrc; echo $$?), 0)
-# 	echo "export PATH=\$$PATH:$(HOME)/.tbk/$(BIN)/bin" >> $(HOME)/.bashrc
-# endif
+ifneq ($(shell grep -q "export PATH=\$$PATH:$(HOME)/.tbk/$(BIN)/bin" $(HOME)/.bashrc; echo $$?), 0)
+	echo "export PATH=\$$PATH:$(HOME)/.tbk/$(BIN)/bin" >> $(HOME)/.bashrc
+endif
 
 diagrams: plantuml.jar
 	java -jar plantuml.jar docs/diagrams/*.md
